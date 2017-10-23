@@ -3,7 +3,8 @@
 ```sh
 1. In `/src`, rename `config-example.js` to `config.js`
 2. In `config.js`, use your personal access token and username
-3. npm start
+3. npm install
+4. npm start
 ```
 
 # Instructions
