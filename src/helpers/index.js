@@ -1,7 +1,6 @@
-import { accessToken } from '../api-key.js';
+import { accessToken, username } from '../config.js';
 
 const baseUrl = 'https://api.github.com';
-const username = 'teganduong';
 
 export const fetchRepos = () => {
   const endpoint = `${baseUrl}/users/${username}/repos?access_token=${accessToken}`;

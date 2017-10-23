@@ -8,7 +8,9 @@ const RepoIssuesList = ({ repoIssues, onIssueDragStart, onIssueDragEnd, onIssueD
       draggable="true"
       onDragStart={onIssueDragStart}
       onDragEnd={onIssueDragEnd}
-    >{issue.title}
+    >
+      <div><strong>{issue.title}</strong></div>
+      <div>Issue #{issue.number}</div>
     </li>
   );
 

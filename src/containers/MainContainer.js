@@ -33,11 +33,20 @@ class MainContainer extends Component {
     const currentRepo = this.state.selectedRepo;
     const selectedRepo = e.currentTarget;
     const repoUrl = selectedRepo.getAttribute('data-url');
-    fetchRepoIssues(repoUrl)
-      .then(issues => this.setState({ repoIssues: issues, selectedRepo }));
+    const repoId = selectedRepo.getAttribute('data-id');
+
+    if (window.sessionStorage.repoId === repoId && window.sessionStorage.repoIssues) {
+      const storedIssues = JSON.parse(window.sessionStorage.repoIssues);
+      this.setState({ repoIssues: storedIssues, selectedRepo });
+    } else {
+      fetchRepoIssues(repoUrl)
+        .then(issues => this.setState({ repoIssues: issues, selectedRepo }));
+    }
 
     addBackgroundColor(selectedRepo);
     if (currentRepo) removeBackgroundColor(currentRepo);
+
+    window.sessionStorage.repoId = repoId;
   }
 
   handleDragStart = (e) => {
@@ -57,6 +66,8 @@ class MainContainer extends Component {
 
     issues.splice(toPosition, 0, issues.splice(fromPosition, 1)[0]);
     this.setState({ repoIssues: issues });
+
+    window.sessionStorage.repoIssues = JSON.stringify(issues);
   }
 
   handleDragOver = (e) => {
@@ -86,12 +97,15 @@ class MainContainer extends Component {
           repos={this.state.repos}
           onRepoClick={this.handleRepoClick}
         />
-        <RepoIssuesList
-          repoIssues={this.state.repoIssues}
-          onIssueDragStart={this.handleDragStart}
-          onIssueDragEnd={this.handleDragEnd}
-          onIssueDragOver={this.handleDragOver}
-        />
+        {
+          this.state.selectedRepo &&
+          <RepoIssuesList
+            repoIssues={this.state.repoIssues}
+            onIssueDragStart={this.handleDragStart}
+            onIssueDragEnd={this.handleDragEnd}
+            onIssueDragOver={this.handleDragOver}
+          />
+        }
       </div>
     );
   }
