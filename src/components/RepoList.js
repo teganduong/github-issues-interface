@@ -3,8 +3,9 @@ import React from 'react';
 const RepoList = ({ repos, onRepoClick }) => {
   const allRepos = repos.map(repo =>
     <li key={repo.id} 
+      data-url={repo.url}
       className="list-group-item"
-      onClick={() => onRepoClick(repo)}>{repo.name}
+      onClick={onRepoClick}>{repo.name}
     </li>
   );
 

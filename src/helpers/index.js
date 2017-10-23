@@ -12,3 +12,11 @@ export const fetchRepos = () => {
 export const fetchRepoIssues = (repoUrl) => (
   fetch(`${repoUrl}/issues`).then(resp => resp.json())
 );
+
+export const addBackgroundColor = (element) => {
+  element.style.background = '#e1e4e8';
+};
+
+export const removeBackgroundColor = (element) => {
+  element.style.background = 'none';
+};
