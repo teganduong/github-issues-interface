@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { fetchRepos } from '../helpers/index.js';
+import { fetchRepos, fetchRepoIssues } from '../helpers/index.js';
 import RepoList from '../components/RepoList.js';
+import RepoIssuesList from '../components/RepoIssuesList.js';
 
 class MainContainer extends Component {
   state = {
-    repos: []
+    repos: [],
+    repoIssues: []
   }
 
   componentDidMount() {
@@ -18,10 +20,21 @@ class MainContainer extends Component {
       });
   }
 
+  handleRepoClick = (selectedRepo) => {
+    fetchRepoIssues(selectedRepo.url)
+      .then(issues => this.setState({ repoIssues: issues }));
+  }
+
   render() {
     return (
-      <div>
-        <RepoList repos={this.state.repos} />
+      <div className="row">
+        <RepoList
+          repos={this.state.repos}
+          onRepoClick={this.handleRepoClick}
+        />
+        <RepoIssuesList
+          repoIssues={this.state.repoIssues}
+        />
       </div>
     );
   }
