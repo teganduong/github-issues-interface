@@ -8,3 +8,7 @@ export const fetchRepos = () => {
 
   return fetch(endpoint).then(resp => resp.json());
 };
+
+export const fetchRepoIssues = (repoUrl) => (
+  fetch(`${repoUrl}/issues`).then(resp => resp.json())
+);
